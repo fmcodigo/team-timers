@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace Timers.Server
+namespace Timers.Shared
 {
     public class Program
     {

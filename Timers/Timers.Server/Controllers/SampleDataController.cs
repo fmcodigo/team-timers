@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Timers.Server.Controllers
+namespace Timers.Shared.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller

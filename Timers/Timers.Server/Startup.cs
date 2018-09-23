@@ -7,7 +7,7 @@ using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Mime;
 
-namespace Timers.Server
+namespace Timers.Shared
 {
     public class Startup
     {
