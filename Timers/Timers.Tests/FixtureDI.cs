@@ -12,10 +12,10 @@ namespace Timers.Tests
 {
     public class FixtureDI : IDisposable
     {
-        public ServiceProvider ServiceProvider { get; private set; }
+        public IServiceProvider ServiceProvider { get; private set; }
         public FixtureDI()
         {
-            var services = new ServiceCollection();
+            IServiceCollection services = new ServiceCollection();
 
             services.TryAddSingleton<IRepository<Game>, MemoryGameRepository>();
             services.TryAddSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();

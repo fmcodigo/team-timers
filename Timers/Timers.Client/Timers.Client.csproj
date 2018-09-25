@@ -15,4 +15,10 @@
     <ProjectReference Include="..\Timers.Shared\Timers.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Shared\MyMainLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

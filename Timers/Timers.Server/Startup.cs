@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Linq;
 using System.Net.Mime;
+using Timers.Shared.Models;
+using Timers.Shared.Repositories;
+using Timers.Shared.Services;
+using AutoMapper;
 
 namespace Timers.Shared
 {
@@ -15,7 +19,20 @@ namespace Timers.Shared
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IRepository<Game>, MemoryGameRepository>();
+            services.TryAddSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();
+            services.TryAddSingleton<IPlayerRepository<Player>, MemoryPlayerRepository>();
+            services.TryAddSingleton<IRepository<Team>, MemoryTeamRepository>();
+            services.TryAddSingleton<IGameService, GameService>();
+
             services.AddMvc();
+            
+            var config = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new AutomapperProfile());
+            });
+            services.AddSingleton<IMapper>(s => config.CreateMapper());
+            //services.AddAutoMapper(c => c.AddProfile(new AutomapperProfile()));
 
             services.AddResponseCompression(options =>
             {
