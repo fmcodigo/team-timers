@@ -30,29 +30,15 @@ namespace Timers.Shared.Repositories
             });
         }
 
-        public void Add(GameSetting entity)
+        public Task<GameSetting> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = Items.Where(i => i.Id == id).SingleOrDefault();
+            return Task.FromResult(result);
         }
 
-        public void Delete(GameSetting entity)
+        public Task<IEnumerable<GameSetting>> GetAllAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(GameSetting entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<GameSetting> GetAll()
-        {
-            return Items;
-        }
-
-        public GameSetting GetById(Guid id)
-        {
-            return Items.Where(i => i.Id == id).SingleOrDefault();
+            return Task.FromResult(Items as IEnumerable<GameSetting>);
         }
     }
 }

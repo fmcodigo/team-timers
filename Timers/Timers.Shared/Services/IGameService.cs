@@ -1,8 +1,5 @@
-﻿using Timers.Shared.Models;
-using Timers.Shared.ViewModels;
+﻿using Timers.Shared.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Timers.Shared.Services
@@ -11,7 +8,7 @@ namespace Timers.Shared.Services
     {
         //IEnumerable<GameVM> GetAll();
         //Game Add(Game newItem);
-        GameVM GetById(Guid id);
+        Task<GameVM> GetByIdAsync(Guid id);
         //void Remove(Guid id);
     }
 }

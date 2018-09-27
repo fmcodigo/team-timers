@@ -24,34 +24,20 @@ namespace Timers.Shared.Repositories
                 Id = new Guid("d66945ca-e9ef-4b5b-8084-35ea568d937c"),
                 HomeTeamId = new Guid("aa17ac7b-3e35-4182-9ae3-a572500b0aff"),  //Galaxy
                 VisitorTeamId = new Guid("9b9ad7b6-88f7-48f4-bb70-8f4b71374f44"), //DC United
-                 GameSettingId = new Guid("539624fd-c54a-4621-b182-b3136ee2121a") //Indoor Soccer
+                GameSettingId = new Guid("539624fd-c54a-4621-b182-b3136ee2121a") //Indoor Soccer
             });
 
         }
 
-        public IEnumerable<Game> GetAll()
+        public Task<Game> GetByIdAsync(Guid id)
         {
-            return Items;
+            var result = Items.Where(i => i.Id == id).SingleOrDefault();
+            return Task.FromResult(result);
         }
 
-        public Game GetById(Guid id)
+        public Task<IEnumerable<Game>> GetAllAsync()
         {
-            return Items.Where(i => i.Id == id).SingleOrDefault();
-        }
-
-        public void Add(Game entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Game entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(Game entity)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(Items as IEnumerable<Game>);
         }
     }
 }

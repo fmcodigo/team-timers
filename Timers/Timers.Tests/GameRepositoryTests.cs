@@ -3,7 +3,7 @@ using Timers.Shared.Models;
 using System;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
-
+using System.Threading.Tasks;
 
 namespace Timers.Tests
 {
@@ -20,9 +20,9 @@ namespace Timers.Tests
         }
 
         [Fact]
-        public void HomeTeamId_ShouldBe_GalaxyId()
+        public async Task HomeTeamId_ShouldBe_GalaxyId()
         {
-            var game = _gameRepository.GetById(new Guid("d66945ca-e9ef-4b5b-8084-35ea568d937c"));
+            var game = await _gameRepository.GetByIdAsync(new Guid("d66945ca-e9ef-4b5b-8084-35ea568d937c"));
 
             var homeTeamId = game.HomeTeamId;
             var teamId = new Guid("aa17ac7b-3e35-4182-9ae3-a572500b0aff"); //Galaxy

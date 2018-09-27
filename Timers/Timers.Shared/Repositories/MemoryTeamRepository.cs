@@ -19,36 +19,27 @@ namespace Timers.Shared.Repositories
         {
             Items = new List<Team>();
 
-            Items.Add(new Team { Id = new Guid("aa17ac7b-3e35-4182-9ae3-a572500b0aff"),
-                Name = "Galaxy" });
-            Items.Add(new Team { Id = new Guid("9b9ad7b6-88f7-48f4-bb70-8f4b71374f44"),
-                Name = "DC United" });
+            Items.Add(new Team
+            {
+                Id = new Guid("aa17ac7b-3e35-4182-9ae3-a572500b0aff"),
+                Name = "Galaxy"
+            });
+            Items.Add(new Team
+            {
+                Id = new Guid("9b9ad7b6-88f7-48f4-bb70-8f4b71374f44"),
+                Name = "DC United"
+            });
         }
 
-
-        public IEnumerable<Team> GetAll()
+        public Task<Team> GetByIdAsync(Guid id)
         {
-            return Items;
+            var result = Items.Where(i => i.Id == id).SingleOrDefault();
+            return Task.FromResult(result);
         }
 
-        public Team GetById(Guid id)
+        public Task<IEnumerable<Team>> GetAllAsync()
         {
-            return Items.Where(i => i.Id == id).SingleOrDefault();
-        }
-
-        public void Add(Team entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Team entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(Team entity)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(Items as IEnumerable<Team>);
         }
     }
 }

@@ -4,21 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Timers.Shared.Models;
+using Timers.Shared.Repositories;
 using Timers.Shared.Services;
 using Timers.Shared.ViewModels;
 
 namespace Timers.Server.Controllers
 {
-    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly IGameService _gameService;
+        private readonly IRepository<Game> _gameRepository;
 
-        public GameController(IGameService gameService)
+        public GameController(IRepository<Game> gameRepository)
         {
-            _gameService = gameService ?? throw new ArgumentNullException(nameof(gameService));
+            _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
         }
 
         // GET: api/Game
@@ -29,29 +30,20 @@ namespace Timers.Server.Controllers
         }
 
         // GET: api/Game/5
-        [HttpGet("{id}", Name = "Get")]
-        public GameVM Get(string id)
+        [HttpGet("{id}")]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Game>> GetAsync(string id)
         {
-            var gameVM = _gameService.GetById(new Guid(id));
-            return gameVM;
+            var game = await _gameRepository.GetByIdAsync(new Guid(id));
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            return game;
         }
 
-        // POST: api/Game
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
-        // PUT: api/Game/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

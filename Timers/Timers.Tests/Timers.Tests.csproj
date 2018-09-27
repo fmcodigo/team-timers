@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Timers.Server\Timers.Server.csproj" />
     <ProjectReference Include="..\Timers.Shared\Timers.Shared.csproj" />
   </ItemGroup>
 

@@ -3,8 +3,6 @@ using Timers.Shared.Repositories;
 using Timers.Shared.Models;
 using Timers.Shared.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Timers.Shared.Services
@@ -30,22 +28,22 @@ namespace Timers.Shared.Services
             _teamRepository = teamRepository ?? throw new ArgumentNullException(nameof(teamRepository));
         }
 
-        public GameVM GetById(Guid id)
+        public async Task<GameVM> GetByIdAsync(Guid id)
         {
-            var game = _gameRepository.GetById(id);
+            var game = await _gameRepository.GetByIdAsync(id);
             var gameVM = _mapper.Map<Game, GameVM>(game);
 
-            var homeTeam = _teamRepository.GetById(gameVM.HomeTeamId);
+            var homeTeam = await _teamRepository.GetByIdAsync(gameVM.HomeTeamId);
             var homeTeamVM = _mapper.Map<Team, TeamVM>(homeTeam);
-            homeTeamVM.Players = _playerRepository.GetItemsById(gameVM.HomeTeamId).ToList();
+            homeTeamVM.Players = await _playerRepository.GetItemsByIdAsync(gameVM.HomeTeamId);
             gameVM.HomeTeam = homeTeamVM;
 
-            var visitorTeam = _teamRepository.GetById(gameVM.VisitorTeamId);
+            var visitorTeam = await _teamRepository.GetByIdAsync(gameVM.VisitorTeamId);
             var visitorTeamVM = _mapper.Map<Team, TeamVM>(visitorTeam);
-            visitorTeamVM.Players = _playerRepository.GetItemsById(gameVM.VisitorTeamId).ToList();
+            visitorTeamVM.Players = await _playerRepository.GetItemsByIdAsync(gameVM.VisitorTeamId);
             gameVM.VisitorTeam = visitorTeamVM;
 
-            gameVM.GameSetting = _gameSettingRepository.GetById(gameVM.GameSettingId);
+            gameVM.GameSetting = await _gameSettingRepository.GetByIdAsync(gameVM.GameSettingId);
 
             return gameVM;
         }

@@ -7,6 +7,6 @@ namespace Timers.Shared.ViewModels
 {
     public class TeamVM : Team
     {
-        public List<Player> Players { get; set; }
+        public IEnumerable<Player> Players { get; set; }
     }
 }

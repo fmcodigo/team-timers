@@ -1,29 +1,25 @@
 ﻿@page "/gamesession/{gameId}"
-
 @using Timers.Shared.ViewModels;
+@using Timers.Shared.Services;
+@inject GameService gameService
 
-@inject HttpClient Http
-
-<h1> so far so good</h1>
-@if (gameVM == null)
+@if (game == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h2>@gameVM.HomeTeam.Name</h2>
+    <h1>@game.HomeTeam.Name vs @game.VisitorTeam.Name</h1>
 }
 
 @functions {
 
-    [Parameter]
-    private string gameId { get; set; }
+    [Parameter] protected string gameId { get; set; }
 
-    GameVM gameVM { get; set; }
+    private GameVM game { get; set; }
 
     protected override async Task OnInitAsync()
     {
-        //gameVM = new GameVM();
-        gameVM = await Http.GetJsonAsync<GameVM>($"/api/game/Get/{gameId}");
+        game = await gameService.GetByIdAsync(new Guid(gameId));
     }
 }

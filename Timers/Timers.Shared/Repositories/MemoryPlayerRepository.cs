@@ -22,7 +22,7 @@ namespace Timers.Shared.Repositories
 
             Items.Add(new Player()
             {
-                Id = new Guid("571cea5a-88ce-42fc-8a31-cd70a2a00cc8"),
+                Id = new Guid( "571cea5a-88ce-42fc-8a31-cd70a2a00cc8"),
                 Jersey = "10",
                 Name = "Messi",
                 TeamId = GalaxyTeamGuid
@@ -85,36 +85,21 @@ namespace Timers.Shared.Repositories
             });
         }
 
-        public Player GetById(Guid id)
+        public Task<Player> GetByIdAsync(Guid id)
         {
-            return Items.Where(i => i.Id == id).SingleOrDefault();
+            var result = Items.Where(i => i.Id == id).SingleOrDefault();
+            return Task.FromResult(result);
         }
 
-        public IEnumerable<Player> GetItemsById(Guid teamId)
+        public Task<IEnumerable<Player>> GetAllAsync()
         {
-            return Items.Where(i => i.TeamId == teamId).ToList();
+            return Task.FromResult(Items as IEnumerable<Player>);
         }
 
-        public IEnumerable<Player> GetAll()
+        public Task<IEnumerable<Player>> GetItemsByIdAsync(Guid teamId)
         {
-            throw new NotImplementedException();
+            var results  = Items.Where(i => i.TeamId == teamId).ToList();
+            return Task.FromResult(results as IEnumerable<Player>);
         }
-
-        public void Add(Player entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Player entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(Player entity)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

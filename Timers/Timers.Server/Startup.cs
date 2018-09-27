@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net.Mime;
 using Timers.Shared.Models;
 using Timers.Shared.Repositories;
-using Timers.Shared.Services;
 using AutoMapper;
 
 namespace Timers.Shared
@@ -19,11 +18,13 @@ namespace Timers.Shared
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddServerSideBlazor<Client.Startup>();
+            
             services.TryAddSingleton<IRepository<Game>, MemoryGameRepository>();
             services.TryAddSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();
             services.TryAddSingleton<IPlayerRepository<Player>, MemoryPlayerRepository>();
             services.TryAddSingleton<IRepository<Team>, MemoryTeamRepository>();
-            services.TryAddSingleton<IGameService, GameService>();
+            //services.TryAddSingleton<IGameService, GameService>();
 
             services.AddMvc();
             
@@ -59,7 +60,9 @@ namespace Timers.Shared
                 routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
             });
 
-            app.UseBlazor<Client.Program>();
+            //app.UseBlazor<Client.Program>();
+            // Use component registrations and static files from the app project.
+            app.UseServerSideBlazor<Client.Startup>();
         }
     }
 }
