@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timers.Client", "Timers.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timers.Shared", "Timers.Shared\Timers.Shared.csproj", "{EEF489E1-50EB-42F4-86C5-41BC17C788E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timers.Tests", "Timers.Tests\Timers.Tests.csproj", "{764140DC-FC40-4410-939A-6E4FDD32991A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timers.Tests", "Timers.Tests\Timers.Tests.csproj", "{764140DC-FC40-4410-939A-6E4FDD32991A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,6 +4,7 @@ using Timers.Shared.Models;
 using Timers.Shared.ViewModels;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Timers.Shared.Services
 {
@@ -35,12 +36,13 @@ namespace Timers.Shared.Services
 
             var homeTeam = await _teamRepository.GetByIdAsync(gameVM.HomeTeamId);
             var homeTeamVM = _mapper.Map<Team, TeamVM>(homeTeam);
-            homeTeamVM.Players = await _playerRepository.GetItemsByIdAsync(gameVM.HomeTeamId);
+            var players = await _playerRepository.GetItemsByIdAsync(gameVM.HomeTeamId);
+            homeTeamVM.Players = _mapper.Map<IEnumerable<Player>, IEnumerable<PlayerVM>>(players);
             gameVM.HomeTeam = homeTeamVM;
 
             var visitorTeam = await _teamRepository.GetByIdAsync(gameVM.VisitorTeamId);
             var visitorTeamVM = _mapper.Map<Team, TeamVM>(visitorTeam);
-            visitorTeamVM.Players = await _playerRepository.GetItemsByIdAsync(gameVM.VisitorTeamId);
+            //visitorTeamVM.Players = await _playerRepository.GetItemsByIdAsync(gameVM.VisitorTeamId);
             gameVM.VisitorTeam = visitorTeamVM;
 
             gameVM.GameSetting = await _gameSettingRepository.GetByIdAsync(gameVM.GameSettingId);

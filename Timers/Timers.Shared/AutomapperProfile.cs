@@ -12,7 +12,8 @@ namespace Timers.Shared
             CreateMap<GameVM, Game>();
             CreateMap<Team, TeamVM>();
             CreateMap<TeamVM, Team>();
-
+            CreateMap<Player, PlayerVM>();
+            CreateMap<PlayerVM, Player>();
         }
     }
 }

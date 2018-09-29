@@ -3,14 +3,85 @@
 @using Timers.Shared.Services;
 @inject GameService gameService
 
+<h2>Team Timers</h2>
+<br>
+
 @if (game == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h1>@game.HomeTeam.Name vs @game.VisitorTeam.Name</h1>
+    <BlazorNav IsTabs>
+        <BlazorNavLink onclick="@(() => onclickTab(1))" IsActive="@(active == 1)">Players List</BlazorNavLink>
+        <BlazorNavLink onclick="@(() => onclickTab(2))" IsActive="@(active == 2)">Controls</BlazorNavLink>
+        <BlazorNavLink onclick="@(() => onclickTab(3))" IsActive="@(active == 3)">Timers List</BlazorNavLink>
+    </BlazorNav>
+    <TabContent>
+        <TabPane IsOpen="@(active == 1)">
+            <br />
+            <hr />
+            <p><h8>Team: @game.HomeTeam.Name</h8></p>
+            <p><h9>Select players that are present.</h9></p>
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-1">Jersey</div>
+                    <div class="col-3">Name</div>
+                    <div class="col-1"></div>
+                </div>
+                @foreach (var player in game.HomeTeam.Players.OrderBy(p => p.Name))
+                {
+                    <div class="row">
+                        <div class="col-1">@player.Jersey</div>
+                        <div class="col-3 @player.IsPresent.ToTextListGroupItemPrimary()">@player.Name</div>
+                        <div class="col-1">
+                            <button onclick="@(e => { player.IsPresent = !player.IsPresent; StateHasChanged(); })" type="button"
+                                    class="@player.IsPresent.ToTextBtnPrimary()" aria-label="Toggle player is present">
+                                <span class="@player.IsPresent.ToIconCheck()" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </TabPane>
+        <TabPane IsOpen="@(active == 2)">
+            <h1>@game.HomeTeam.Name vs @game.VisitorTeam.Name</h1>
+
+        </TabPane>
+        <TabPane IsOpen="@(active == 3)">
+            <h1>@game.HomeTeam.Name vs @game.VisitorTeam.Name</h1>
+
+            <hr />
+            <br />
+            <p><h8>Team: @game.HomeTeam.Name</h8></p>
+            <p><h7>Players In Game</h7></p>
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-1">Jersey</div>
+                    <div class="col-3">Name</div>
+                    <div class="col-1"></div>
+                </div>
+                @foreach (var player in game.HomeTeam.Players.OrderBy(p => p.Name).Where(p => p.IsPresent).ToList())
+                {
+                    <div class="row">
+                        <div class="col-1">@player.Jersey</div>
+                        <div class="col-3">
+                            <button type="button" onclick="@(e => { player.IsPlaying = !player.IsPlaying; StateHasChanged(); })"
+                                    class="@player.IsPlaying.ToTextBtnPrimaryBlock()">
+                                @player.Name
+                            </button>
+                        </div>
+                        <div class="col-1">@player.SecondsPlayed.ToTimerString()</div>
+                    </div>
+                }
+            </div>
+        </TabPane>
+    </TabContent>
+
 }
+
 
 @functions {
 
@@ -22,4 +93,14 @@ else
     {
         game = await gameService.GetByIdAsync(new Guid(gameId));
     }
+
+    // Tabs
+    private int active = 1;
+
+    void onclickTab(int selection)
+    {
+        active = selection;
+        StateHasChanged();
+    }
+
 }
