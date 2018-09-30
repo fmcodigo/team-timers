@@ -46,7 +46,45 @@ else
             </div>
         </TabPane>
         <TabPane IsOpen="@(active == 2)">
-            <h1>@game.HomeTeam.Name vs @game.VisitorTeam.Name</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="HomeTeamName">Home</span>
+                            </div>
+                            <input type="text" class="form-control" bind="@game.HomeTeam.Name" aria-label="HomeTeamName" aria-describedby="HomeTeamName" disabled />
+                            @*<NumericBox ValueChanged="@HomeScoreValueChanged" />*@
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="VisitorTeamName">Visitor</span>
+                            </div>
+                            <input type="text" class="form-control" bind="@game.VisitorTeam.Name" aria-label="VisitorTeamName" aria-describedby="VisitorTeamName" disabled />
+                            @*<NumericBox ValueChanged="@VisitorScoreValueChanged" />*@
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <TimerControl />
+                @*<div class="row">
+                    <div class="col text-center">
+                        <h3>@game.SecondsElapsed.ToTimerString()</h3>
+                    </div>.
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-secondary" onclick="@StartTimer"><span class="oi oi-media-play" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-secondary" onclick="@PauseTimer"><span class="oi oi-media-pause" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-secondary" onclick="@ResetTimer"><span class="oi oi-reload" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
 
         </TabPane>
         <TabPane IsOpen="@(active == 3)">

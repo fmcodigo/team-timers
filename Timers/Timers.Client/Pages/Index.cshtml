@@ -1,6 +1,20 @@
 ﻿@page "/"
+@*@using Timers.Shared.ViewModels*@
+@*<div class="container">
+        <a class="btn btn-primary" href='/gamesession/d66945ca-e9ef-4b5b-8084-35ea568d937c'>Sample Game</a>
+    </div>*@
 
-<div class="container">
-    <a class="btn btn-primary" href='/gamesession/d66945ca-e9ef-4b5b-8084-35ea568d937c'>Sample Game</a>
-</div>
+<p>Seconds: @GameSeconds</p>
+<hr />
+<TimerControl SecondsChanged="@(seconds => { GameSeconds = seconds; StateHasChanged(); })" />
 
+@functions{
+    private int GameSeconds { get; set; }
+
+    void TimerEvent(int seconds)
+    {
+        GameSeconds = seconds;
+        //Update players timers
+        StateHasChanged();
+    }
+}
