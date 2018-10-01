@@ -38,9 +38,6 @@
             if (IsTimerRunning)
             {
                 SecondsChanged(++Seconds);
-                //IncrementPlayersTime();
-                //this.StateHasChanged();
-                //BroadcastScoreboard();
             }
         }), null, 1000, 1000);
 
@@ -58,7 +55,6 @@
         SecondsChanged(Seconds);
 
         IsTimerRunning = false;
-        //BroadcastScoreboard();
     }
 
 

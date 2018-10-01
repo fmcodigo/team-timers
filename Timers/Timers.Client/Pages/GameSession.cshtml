@@ -54,7 +54,7 @@ else
                                 <span class="input-group-text" id="HomeTeamName">Home</span>
                             </div>
                             <input type="text" class="form-control" bind="@game.HomeTeam.Name" aria-label="HomeTeamName" aria-describedby="HomeTeamName" disabled />
-                            @*<NumericBox ValueChanged="@HomeScoreValueChanged" />*@
+                            <NumericBox ValueChanged="@(v=> { game.HomeTeamScore = v; StateHasChanged(); } )" />
                         </div>
                     </div>
                     <div class="col">
@@ -63,38 +63,22 @@ else
                                 <span class="input-group-text" id="VisitorTeamName">Visitor</span>
                             </div>
                             <input type="text" class="form-control" bind="@game.VisitorTeam.Name" aria-label="VisitorTeamName" aria-describedby="VisitorTeamName" disabled />
-                            @*<NumericBox ValueChanged="@VisitorScoreValueChanged" />*@
+                            <NumericBox ValueChanged="@(v=> { game.VisitorTeamScore = v; StateHasChanged(); } )" />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                 </div>
-                <TimerControl />
-                @*<div class="row">
-                    <div class="col text-center">
-                        <h3>@game.SecondsElapsed.ToTimerString()</h3>
-                    </div>.
-                </div>
-                <div class="row">
-                    <div class="col text-center">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-secondary" onclick="@StartTimer"><span class="oi oi-media-play" aria-hidden="true"></span></button>
-                            <button type="button" class="btn btn-secondary" onclick="@PauseTimer"><span class="oi oi-media-pause" aria-hidden="true"></span></button>
-                            <button type="button" class="btn btn-secondary" onclick="@ResetTimer"><span class="oi oi-reload" aria-hidden="true"></span></button>
-                        </div>
-                    </div>
-                </div>*@
+                <TimerControl SecondsChanged="@(s => TimerEvent(s))" />
             </div>
 
         </TabPane>
         <TabPane IsOpen="@(active == 3)">
-            <h1>@game.HomeTeam.Name vs @game.VisitorTeam.Name</h1>
-
-            <hr />
+            <p>Players In Game</p>
             <br />
-            <p><h8>Team: @game.HomeTeam.Name</h8></p>
-            <p><h7>Players In Game</h7></p>
-            <hr />
+            <p>@game.HomeTeam.Name @game.HomeTeamScore vs @game.VisitorTeamScore @game.VisitorTeam.Name</p>
+            <p>@game.SecondsElapsed.ToTimerString()</p>
+            <br />
             <div class="container">
                 <div class="row">
                     <div class="col-1">Jersey</div>
@@ -123,22 +107,30 @@ else
 
 @functions {
 
-    [Parameter] protected string gameId { get; set; }
+[Parameter] protected string gameId { get; set; }
 
-    private GameVM game { get; set; }
+private GameVM game { get; set; }
 
-    protected override async Task OnInitAsync()
-    {
-        game = await gameService.GetByIdAsync(new Guid(gameId));
-    }
+protected override async Task OnInitAsync()
+{
+    game = await gameService.GetByIdAsync(new Guid(gameId));
+}
 
-    // Tabs
-    private int active = 1;
+// Tabs
+private int active = 1;
 
-    void onclickTab(int selection)
-    {
-        active = selection;
-        StateHasChanged();
-    }
+void onclickTab(int selection)
+{
+    active = selection;
+    StateHasChanged();
+}
+
+void TimerEvent(int seconds)
+{
+    game.SecondsElapsed = seconds;
+    game.HomeTeam.Players.Where(p => (p.IsPlaying)).ToList().ForEach(p => p.SecondsPlayed++);
+    //BroadcastScoreboard();
+    StateHasChanged();
+}
 
 }

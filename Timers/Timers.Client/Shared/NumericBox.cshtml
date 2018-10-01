@@ -12,20 +12,19 @@
 
 @functions
 {
-    [Parameter] protected int Value { get; set; }
+    [Parameter] private int Value { get; set; }
 
-    [Parameter]
-    private Action<int> ValueChanged { get; set; }
+    [Parameter] private Action<int> ValueChanged { get; set; }
 
     void Increment()
     {
         if (Value < 99) Value++;
-        ValueChanged?.Invoke(Value);
+        ValueChanged(Value);
     }
 
     void Decrement()
     {
         if (Value > 0) Value--;
-        ValueChanged?.Invoke(Value);
+        ValueChanged(Value);
     }
 }
