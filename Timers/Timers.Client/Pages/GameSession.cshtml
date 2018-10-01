@@ -14,16 +14,13 @@ else
 {
     <BlazorNav IsTabs>
         <BlazorNavLink onclick="@(() => onclickTab(1))" IsActive="@(active == 1)">Players List</BlazorNavLink>
-        <BlazorNavLink onclick="@(() => onclickTab(2))" IsActive="@(active == 2)">Controls</BlazorNavLink>
-        <BlazorNavLink onclick="@(() => onclickTab(3))" IsActive="@(active == 3)">Timers List</BlazorNavLink>
+        <BlazorNavLink onclick="@(() => onclickTab(2))" IsActive="@(active == 2)">Timer Controls</BlazorNavLink>
+        <BlazorNavLink onclick="@(() => onclickTab(3))" IsActive="@(active == 3)">Game In Progress</BlazorNavLink>
     </BlazorNav>
     <TabContent>
         <TabPane IsOpen="@(active == 1)">
             <br />
-            <hr />
-            <p><h8>Team: @game.HomeTeam.Name</h8></p>
-            <p><h9>Select players that are present.</h9></p>
-            <hr />
+            <p>Team: @game.HomeTeam.Name</p>
             <div class="container">
                 <div class="row">
                     <div class="col-1">Jersey</div>
@@ -48,36 +45,33 @@ else
         <TabPane IsOpen="@(active == 2)">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="HomeTeamName">Home</span>
-                            </div>
-                            <input type="text" class="form-control" bind="@game.HomeTeam.Name" aria-label="HomeTeamName" aria-describedby="HomeTeamName" disabled />
-                            <NumericBox ValueChanged="@(v=> { game.HomeTeamScore = v; StateHasChanged(); } )" />
-                        </div>
+                    <div class="col-4">
+                        <p><h6>Home</h6></p>
+                        <p>
+                            <span class="h2">@game.HomeTeam.Name:</span>
+                            <span><NumericBox ValueChanged="@(v=> { game.HomeTeamScore = v; StateHasChanged(); } )" /></span>
+                        </p>
                     </div>
-                    <div class="col">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="VisitorTeamName">Visitor</span>
-                            </div>
-                            <input type="text" class="form-control" bind="@game.VisitorTeam.Name" aria-label="VisitorTeamName" aria-describedby="VisitorTeamName" disabled />
-                            <NumericBox ValueChanged="@(v=> { game.VisitorTeamScore = v; StateHasChanged(); } )" />
-                        </div>
+                    <div class="col-4">
+                        <p><h6>Visitor</h6></p>
+                        <p>
+                            <span class="h2">@game.VisitorTeam.Name :</span>
+                            <span><NumericBox ValueChanged="@(v=> { game.VisitorTeamScore = v; StateHasChanged(); } )" /></span>
+                        </p>
                     </div>
                 </div>
-                <div class="row">
-                </div>
-                <TimerControl SecondsChanged="@(s => TimerEvent(s))" />
             </div>
+            <br />
+            <br />
+            <TimerControl SecondsChanged="@(s => TimerEvent(s))" />
+
 
         </TabPane>
         <TabPane IsOpen="@(active == 3)">
-            <p>Players In Game</p>
             <br />
-            <p>@game.HomeTeam.Name @game.HomeTeamScore vs @game.VisitorTeamScore @game.VisitorTeam.Name</p>
-            <p>@game.SecondsElapsed.ToTimerString()</p>
+            <p>@game.HomeTeam.Name @game.HomeTeamScore
+            - @game.SecondsElapsed.ToTimerString() -
+            @game.VisitorTeamScore @game.VisitorTeam.Name</p>
             <br />
             <div class="container">
                 <div class="row">
