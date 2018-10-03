@@ -10,6 +10,6 @@ namespace Timers.Shared.ViewModels
         public TeamVM HomeTeam { get; set; }
         public TeamVM VisitorTeam { get; set; }
         public GameSetting GameSetting { get; set; }
-        public int SecondsElapsed { get; set; }
+        public int SecondsElapsed { get; set; } = 730;
     }
 }

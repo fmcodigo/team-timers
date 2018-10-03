@@ -25,7 +25,7 @@ namespace Timers.Shared.Repositories
                 Name = "Indoor Soccer",
                 IsCountdown = false,
                 MaxPlayersAllowed = 6,
-                MinutesPerPeriod = 23,
+                MinutesPerPeriod = 25,
                 Periods = 2
             });
         }

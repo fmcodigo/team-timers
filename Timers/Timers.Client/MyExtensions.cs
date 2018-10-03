@@ -14,15 +14,15 @@ namespace Timers.Client
             return (b) ? "Edit On" : "Edit Off";
         }
 
-        public static string ToIconCheck(this bool b)
-        {
-            return (b) ? "oi oi-check" : "oi oi-grid-four-up";
-        }
+        //public static string ToIconCheck(this bool b)
+        //{
+        //    return (b) ? "oi oi-check" : "oi oi-grid-four-up";
+        //}
 
-        public static string ToTextBtnPrimary(this bool b)
-        {
-            return (b) ? "btn btn-primary active" : "btn btn-secondary";
-        }
+        //public static string ToTextBtnPrimary(this bool b)
+        //{
+        //    return (b) ? "btn btn-primary active" : "btn btn-secondary";
+        //}
 
         public static string ToTextBtnPrimaryBlock(this bool b)
         {
@@ -39,9 +39,10 @@ namespace Timers.Client
             return DateTime.ParseExact("00:00:00", "HH:mm:ss", null).AddSeconds(seconds).ToString("HH:mm:ss");
         }
 
-        public static string ToProgressBarStyleWidth(this int i)
+        public static string ToProgressBarStyleWidth(this double i)
         {
-            return $"width: {i.ToString()}%";
+            var result = (int)i;
+            return $"width: {result.ToString()}%";
         }
     }
 }

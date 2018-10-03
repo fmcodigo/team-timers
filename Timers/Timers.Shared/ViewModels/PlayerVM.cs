@@ -6,6 +6,6 @@ namespace Timers.Shared.ViewModels
     {
         public bool IsPresent { get; set; }
         public bool IsPlaying { get; set; }
-        public int SecondsPlayed { get; set; }
+        public int SecondsPlayed { get; set; } = 730;
     }
 }
