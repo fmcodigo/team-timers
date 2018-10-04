@@ -1,22 +1,19 @@
-﻿@*<div class="progress">
-        <div class="progress-bar" role="progressbar" style="@(100D / game.GameSetting.MaxPlayerSeconds * player.SecondsPlayed).ToProgressBarStyleWidth()"
-             aria-valuenow="@player.SecondsPlayed" aria-valuemin="0" aria-valuemax="@game.GameSetting.MaxPlayerSeconds"></div>
+﻿<div class="progress">
+        <div class="progress-bar" role="progressbar" style="@GetPercentageStyle()"
+             aria-valuenow="@Now" aria-valuemin="0" aria-valuemax="@Maximum"></div>
     </div>
 
 @functions
 {
-
-    [Parameter] protected int Max { get; set; }
+    [Parameter] protected int Maximum { get; set; }
 
     [Parameter] protected int Now { get; set; }
 
-    [Parameter] protected string StylePercentage { get; set; }
+    private string StylePercentage { get; set; }
 
-    string Percentage(int seconds)
+    string GetPercentageStyle()
     {
-        //var result = (100D / game.GameSetting.MaxPlayerSeconds) * seconds;
-        //return (int)result;
-        return (int)((100D / game.GameSetting.MaxPlayerSeconds) * seconds);
-
+        var result = (100D / Maximum) * Now;
+        return result.ToProgressBarStyleWidth();
     }
-}*@
+}

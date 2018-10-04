@@ -35,11 +35,7 @@ else
                             <th scope="row">@player.Jersey</th>
                             <td>@player.Name</td>
                             <td onclick="@(e => {player.IsPresent = !player.IsPresent; StateHasChanged();})">
-                                <h3>@(player.IsPresent ? "☑" : "☐")</h3>
-                                @*<button onclick="@(e => { player.IsPresent = !player.IsPresent; StateHasChanged(); })" type="button"
-                                            class="@player.IsPresent.ToTextBtnPrimary()" aria-label="Toggle player is present">
-                                        <span class="@player.IsPresent.ToIconCheck()" aria-hidden="true"></span>
-                                    </button>*@
+                                <h3>@(player.IsPresent ? (char)9745 : (char)9744)</h3> @*"☑" : "☐"*@
                             </td>
                         </tr>
                     }
@@ -100,10 +96,7 @@ else
                                 @player.SecondsPlayed.ToTimerString()
                             </td>
                             <td>
-                                @*<div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="@(100D / game.GameSetting.MaxPlayerSeconds * player.SecondsPlayed).ToProgressBarStyleWidth()"
-                                         aria-valuenow="@player.SecondsPlayed" aria-valuemin="0" aria-valuemax="@game.GameSetting.MaxPlayerSeconds"></div>
-                                </div>*@
+                                <ProgressBar Maximum="@game.GameSetting.MaxPlayerSeconds" Now="@player.SecondsPlayed" />
                             </td>
                         </tr>
                     }
@@ -113,7 +106,6 @@ else
     </TabContent>
 
 }
-
 
 @functions {
 
